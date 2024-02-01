@@ -16,7 +16,7 @@ language = st.text_input("Enter language")
 writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", "Witty"])
 word_count = st.slider("Select word count:", min_value=300, max_value=1000, step=100, value=300)
 components.html("""
-<script type='text/javascript' src='//demiseskill.com/ba/36/28/ba36280aacfbc4c6c4b68d106c59564d.js'></script>""")
+<script type='text/javascript' src='//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js'></script>""")
 
 if st.button("Generate Article"):
     prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic."
