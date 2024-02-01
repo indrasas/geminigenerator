@@ -32,6 +32,7 @@ st.set_page_config(
 # Initialize session state variables
 if 'last_generate_time' not in st.session_state:
     st.session_state.last_generate_time = time.time()
+    st.session_state.first_generate_clicked = False
 
 st.title("Article Generator")
 keyword = st.text_input("Enter a keyword")
@@ -44,9 +45,12 @@ word_count = st.slider("Select word count:", min_value=300, max_value=1000, step
 time_elapsed_since_last_generate = time.time() - st.session_state.last_generate_time
 time_remaining = max(30 - time_elapsed_since_last_generate, 0)
 
-if st.button("Generate Article", key="generate_button", disabled=time_remaining > 0):
+if st.button("Generate Article", key="generate_button", disabled=time_remaining > 0 or st.session_state.first_generate_clicked):
     # Update the last generate time
     st.session_state.last_generate_time = time.time()
+
+    # Set the flag to indicate the first generate click
+    st.session_state.first_generate_clicked = True
     
     prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Add 3 paragraph each subheading. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic. Add 5 FAQ related to {keyword} in the end. The content must be in {language} language."
     
