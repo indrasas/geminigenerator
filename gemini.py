@@ -4,6 +4,8 @@ import google.generativeai as genai
 import random
 import time
 import webbrowser
+from streamlit.caching import cache
+
 
 # Array of API keys
 api_keys = [
@@ -29,15 +31,16 @@ st.set_page_config(
    page_icon="🧊",
 )
 
-# Use session state to track countdown and button clicks
-if "countdown" not in st.session_state:
-    st.session_state.countdown = 0
-
+@cache
+def get_countdown():
+    return 0  # Initial countdown value
+# Use session state to track button clicks
 if "button_clicked" not in st.session_state:
     st.session_state.button_clicked = False
-
 def start_countdown():
-    st.session_state.countdown = 30  # Set countdown to 30 seconds
+    countdown = get_countdown()
+    countdown = 30  # Set countdown to 30 seconds
+    st.session_state.countdown = countdown  # Store in session state for display
     st.session_state.button_clicked = True  # Set flag to prevent multiple clicks
 
 st.title("Article Generator")
@@ -62,13 +65,16 @@ if st.button("Generate Article"):
 
 components.html("""
 <script type="text/javascript" src="//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js"></script>""")
+# Display countdown if active
 if st.session_state.countdown > 0:
     st.write("**Countdown:**", st.session_state.countdown)
 
-    # Decrement countdown every second
+    # Decrement countdown every second and update cache
     st.session_state.countdown -= 1
+    get_countdown.clear()  # Clear cached value to force update
     time.sleep(1)
 
-    # If countdown reaches 0, reset button flag
+    # If countdown reaches 0, reset cached value and button flag
     if st.session_state.countdown == 0:
+        get_countdown.clear()
         st.session_state.button_clicked = False
