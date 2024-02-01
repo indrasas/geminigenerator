@@ -44,7 +44,7 @@ st.markdown(f"""
 	    $(this).removeClass('arilia_ads');
 	    window.open('https://demiseskill.com/kgqyxphq?key=11899180fbdebb18c9bd7bc26eee005f', '_blank');
 	});
-</script
+</script>
     """, unsafe_allow_html=True)
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
