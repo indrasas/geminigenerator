@@ -1,13 +1,12 @@
 import streamlit as st
-from google.api_core.client_options import ClientOptions
-from google.cloud import language_v1
+import google.generativeai as genai
 
 # Set your Gemini API key
 api_key = "AIzaSyDpg8l6j9lchODFkwYzGua2KuNgDcQpiCc"
 
-# Create a client using the API key
-client_options = ClientOptions(api_key=api_key)
-client = language_v1.LanguageServiceClient(client_options=client_options)
+# Configure the Gemini SDK
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel("gemini-pro")
 
 st.title("Gemini AI Article Generator")
 
@@ -19,13 +18,11 @@ word_count = st.slider("Select word count:", min_value=300, max_value=1000, step
 if st.button("Generate Article"):
     prompt = f"Write an SEO optimized word article about {keyword} with {writing_style} style in {language} language, in {word_count} words."
 
-    # Call the Gemini API with the prompt
-    document = language_v1.Document(
-        content=prompt,
-        type_=language_v1.Document.Type.PLAIN_TEXT
-    )
-    response = client.annotate_text(request={'document': document})
+    # Call the Gemini API with the prompt, requesting only text
+    response = model.generate_content(prompt, max_tokens=word_count, content_types=["text"])
 
-    # Retrieve and display the generated text
-    article = response.text.annotations[0].text.content
-    st.write(article)
+    # Extract the generated text
+    article_text = response.text
+
+    # Display the generated text
+    st.write(article_text)
