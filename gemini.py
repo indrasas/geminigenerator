@@ -28,18 +28,6 @@ st.set_page_config(
    page_title="Article Generator",
    page_icon="🧊",
 )
-
-# Use session state to track countdown and button clicks
-if "countdown" not in st.session_state:
-    st.session_state.countdown = 0
-
-if "button_clicked" not in st.session_state:
-    st.session_state.button_clicked = False
-
-def start_countdown():
-    st.session_state.countdown = 30  # Set countdown to 30 seconds
-    st.session_state.button_clicked = True  # Set flag to prevent multiple clicks
-
 st.title("Article Generator")
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
@@ -48,8 +36,6 @@ writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", 
 word_count = st.slider("Select word count:", min_value=300, max_value=1000, step=100, value=300)
 
 if st.button("Generate Article"):
-    if st.session_state.countdown == 0:
-        start_countdown()
         prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Add 3 paragraph each subheading. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic. Add 5 FAQ related to {keyword} in the end. The content must be in {language} language."
         # Call the Gemini API with the prompt, requesting only text
         response = model.generate_content(prompt)
@@ -57,20 +43,7 @@ if st.button("Generate Article"):
         article_text = response.text
         # Display the generated text
         st.write(article_text)
-    else:
-        if st.session_state.countdown > 0:
-            st.write("**Please Wait:**", st.session_state.countdown)
 
 components.html("""
 <script type="text/javascript" src="//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js"></script>""")
-# Display countdown if active
-if st.session_state.countdown > 0:
-    st.write("**Countdown:**", st.session_state.countdown)
 
-    # Decrement countdown every second
-    st.session_state.countdown -= 1
-    time.sleep(1)
-
-    # If countdown reaches 0, reset button flag
-    if st.session_state.countdown == 0:
-        st.session_state.button_clicked = False
