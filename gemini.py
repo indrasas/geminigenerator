@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.components.v1 import html
 import google.generativeai as genai
 
 # Set your Gemini API key
@@ -9,22 +10,21 @@ genai.configure(api_key=api_key)
 generation_config = {"temperature":0.9,"top_p":1,"top_k":1,"max_output_tokens":2048}
 model = genai.GenerativeModel("gemini-pro",generation_config=generation_config)
 
-adsterra_code = """
-<script type="text/javascript">
-    atOptions = {
-        'key': '2e1fc6b4812b3af1e887c425bd9febd8',
-        'format': 'iframe',
-        'height': 250,
-        'width': 300,
-        'params': {}
-    };
-    document.write('<scr' + 'ipt type="text/javascript" src="//demiseskill.com/2e1fc6b4812b3af1e887c425bd9febd8/invoke.js"></scr' + 'ipt>');
-</script>
-"""
+html(
+    """
+    <script type='text/javascript' src='//demiseskill.com/ba/36/28/ba36280aacfbc4c6c4b68d106c59564d.js'></script>
+    """,
+    height=0,  # Set height to 0 to prevent layout issues
+)
+st.markdown(
+    """
+    <script type='text/javascript' src='//demiseskill.com/ba/36/28/ba36280aacfbc4c6c4b68d106c59564d.js'></script>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 st.title("Gemini AI Article Generator")
-st.markdown(adsterra_code, unsafe_allow_html=True)
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
 writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", "Witty"])
