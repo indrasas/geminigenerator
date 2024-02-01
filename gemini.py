@@ -10,12 +10,6 @@ genai.configure(api_key=api_key)
 generation_config = {"temperature":0.9,"top_p":1,"top_k":1,"max_output_tokens":2048}
 model = genai.GenerativeModel("gemini-pro",generation_config=generation_config)
 
-
-html_string = """
-    <script type='text/javascript' src='//demiseskill.com/ba/36/28/ba36280aacfbc4c6c4b68d106c59564d.js'></script>
-    """
-components.html(html_string)
-
 st.title("Gemini AI Article Generator")
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
