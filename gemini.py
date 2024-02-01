@@ -36,8 +36,7 @@ writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", 
 word_count = st.slider("Select word count:", min_value=300, max_value=1000, step=100, value=300)
 
 if st.button("Generate Article"):
-        st.markdown("<a href='https://www.google.com' target='_blank'>Open Google</a>", unsafe_allow_html=True)
-        prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic."
+        prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic. Add 5 FAQ related to {keyword} in the end."
         # Call the Gemini API with the prompt, requesting only text
         response = model.generate_content(prompt)
         # Extract the generated text
