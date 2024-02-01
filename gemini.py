@@ -31,8 +31,8 @@ st.set_page_config(
 
 
 st.title("Article Generator")
-components.html("""
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+st.markdown(f"""
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
@@ -44,7 +44,8 @@ components.html("""
 	    $(this).removeClass('arilia_ads');
 	    window.open('https://demiseskill.com/kgqyxphq?key=11899180fbdebb18c9bd7bc26eee005f', '_blank');
 	});
-</script>""")
+</script
+    """, unsafe_allow_html=True)
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
 st.caption('Insert language for the result. ex : Indonesia, English, Japanese, French, Korean, Germany, Chinese Simplified')
