@@ -26,7 +26,6 @@ model = genai.GenerativeModel("gemini-pro", generation_config=generation_config)
 
 st.title("Article Generator")
 keyword = st.text_input("Enter a keyword")
-st.caption('Insert your keyword to generate')
 language = st.text_input("Enter language")
 st.caption('Insert language for the result. ex : Indonesia, English, Japanese, French, Korean, Germany, Chinese Simplified')
 writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", "Witty"])
@@ -34,19 +33,7 @@ word_count = st.slider("Select word count:", min_value=300, max_value=1000, step
 components.html("""
 <script type='text/javascript' src='//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js'></script>""")
 
-# Initialize a timer variable
-last_generate_time = 0
-
 if st.button("Generate Article"):
-    current_time = time.time()
-
-    # Check if 30 seconds have passed since the last generation
-    if current_time - last_generate_time >= 30:
-        last_generate_time = current_time  # Update the last generation time
-
-        # Display the countdown timer
-        with st.spinner("Generating article. Please wait for 30 seconds..."):
-            time.sleep(30)
 
         prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic."
 
@@ -58,6 +45,3 @@ if st.button("Generate Article"):
 
         # Display the generated text
         st.write(article_text)
-
-    else:
-        st.warning("Please wait for 30 seconds before generating a new article.")
