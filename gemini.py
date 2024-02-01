@@ -1,45 +1,31 @@
 import streamlit as st
-import google_ai
+from google.api_core.client_options import ClientOptions
+from google.cloud import language_v1
 
-google_ai.api_key = "AIzaSyDpg8l6j9lchODFkwYzGua2KuNgDcQpiCc"
+# Set your Gemini API key
+api_key = "AIzaSyDpg8l6j9lchODFkwYzGua2KuNgDcQpiCc"
 
+# Create a client using the API key
+client_options = ClientOptions(api_key=api_key)
+client = language_v1.LanguageServiceClient(client_options=client_options)
 
-def generate_article(keyword, language, writing_style, word_count):
-    response = google_ai.TextGeneration.create(
-        model="gemini-pro",
-        prompt=[
-            "Write a SEO optimized word article about " + keyword,
-            "The article should be " + writing_style,
-            "The article length should be " + str(word_count),
-            "The article length should be in" + language
-        ],
-        max_tokens=word_count,
-        temperature=0.7
-    )
-    return response.text
+st.title("Gemini AI Article Generator")
 
-
-st.title("SEO Article Writer with Gemini AI")
-
-keyword = st.text_input("Enter a keyword:")
-language = st.text_input("Enter language:")
+keyword = st.text_input("Enter a keyword")
+language = st.text_input("Enter language")
 writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", "Witty"])
 word_count = st.slider("Select word count:", min_value=300, max_value=1000, step=100, value=300)
-submit_button = st.button("Generate Article")
 
-if submit_button:
-    message = st.empty()
-    message.text("Busy generating...")
+if st.button("Generate Article"):
+    prompt = f"Write an SEO optimized word article about {keyword} with {writing_style} style in {language} language, in {word_count} words."
 
-    try:
-        article = generate_article(keyword, language, writing_style, word_count)
-        message.text("")
-        st.write(article)
-        st.download_button(
-            label="Download article",
-            data=article,
-            file_name="Article.txt",
-            mime='text/txt',
-        )
-    except Exception as e:
-        st.error("Error occurred: " + str(e))
+    # Call the Gemini API with the prompt
+    document = language_v1.Document(
+        content=prompt,
+        type_=language_v1.Document.Type.PLAIN_TEXT
+    )
+    response = client.annotate_text(request={'document': document})
+
+    # Retrieve and display the generated text
+    article = response.text.annotations[0].text.content
+    st.write(article)
