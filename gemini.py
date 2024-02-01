@@ -24,19 +24,10 @@ api_key = random.choice(api_keys)
 genai.configure(api_key=api_key)
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
 model = genai.GenerativeModel("gemini-pro", generation_config=generation_config)
-
 st.set_page_config(
    page_title="Article Generator",
    page_icon="🧊",
 )
-def open_page(url):
-    open_script= """
-        <script type="text/javascript">
-            window.open('%s', '_blank').focus();
-        </script>
-    """ % (url)
-    components(open_script)
-
 st.title("Article Generator")
 keyword = st.text_input("Enter a keyword")
 language = st.text_input("Enter language")
@@ -44,7 +35,7 @@ st.caption('Insert language for the result. ex : Indonesia, English, Japanese, F
 writing_style = st.selectbox("Select writing style:", ["Casual", "Informative", "Witty"])
 word_count = st.slider("Select word count:", min_value=300, max_value=1000, step=100, value=300)
 
-if st.button("Generate Article", on_click=open_page('https://demiseskill.com/kgqyxphq?key=11899180fbdebb18c9bd7bc26eee005f')):
+if st.button("Generate Article"):
         st.markdown("<a href='https://www.google.com' target='_blank'>Open Google</a>", unsafe_allow_html=True)
         prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic."
         # Call the Gemini API with the prompt, requesting only text
