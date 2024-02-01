@@ -4,8 +4,6 @@ import google.generativeai as genai
 import random
 import time
 import webbrowser
-from streamlit.caching import cache
-
 
 # Array of API keys
 api_keys = [
