@@ -58,7 +58,7 @@ if st.button("Generate Article"):
         # Display the generated text
         st.write(article_text)
     else:
-        st.warning("WAIT 30 seconds")
+        st.warning("Please wait 30 seconds")
 
 components.html("""
 <script type="text/javascript" src="//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js"></script>""")
