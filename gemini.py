@@ -59,7 +59,7 @@ if st.button("Generate Article"):
         st.write(article_text)
     else:
         if st.session_state.countdown > 0:
-            st.warning("**Please Wait:**", st.session_state.countdown)
+            st.write("**Please Wait:**", st.session_state.countdown)
 
 components.html("""
 <script type="text/javascript" src="//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js"></script>""")
