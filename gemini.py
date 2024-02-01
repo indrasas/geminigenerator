@@ -35,7 +35,7 @@ components.html("""
 <script type='text/javascript' src='//demiseskill.com/bf/48/25/bf48250f632348ae4ae0dd43a3a7b1b8.js'></script>""")
 
 # Initialize a timer variable
-last_generate_time = time.time()
+last_generate_time = 0
 
 if st.button("Generate Article"):
     current_time = time.time()
@@ -43,6 +43,10 @@ if st.button("Generate Article"):
     # Check if 30 seconds have passed since the last generation
     if current_time - last_generate_time >= 30:
         last_generate_time = current_time  # Update the last generation time
+
+        # Display the countdown timer
+        with st.spinner("Generating article. Please wait for 30 seconds..."):
+            time.sleep(30)
 
         prompt = f"Generate an SEO-optimized article about {keyword} in {language}. The article should be approximately {word_count} words long and structured with clear headings, subheadings, and paragraphs. Use relevant keywords throughout the text and create engaging content that effectively addresses the topic."
 
